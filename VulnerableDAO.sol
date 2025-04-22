@@ -150,8 +150,6 @@ contract VulnerableDAO is Ownable {
         @dev This function checks if the reveal phase has started and validates the nonce
      */
     function revealAndCheckLottery(uint256 nonce) view external {
-        console.log(block.number);
-        console.log(revealBlock);
         require(block.number >= revealBlock && revealBlock != 0, "Reveal not started");
         require(commits[msg.sender] == keccak256(abi.encodePacked(msg.sender, nonce)), "Invalid nonce");
         

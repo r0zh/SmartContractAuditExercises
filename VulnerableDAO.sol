@@ -108,13 +108,16 @@ contract VulnerableDAO is Ownable {
 
 
     /**
-     *  Lottery functionality replacement.
+     *  @custom:fix Lottery functionality replacement.
      *  This version uses the commit-reveal scheme for the lottery
      *  and solves the weak pseudo-randomness problem by introducing a
      *  random input in the start of the reveal phase, since no one can predict when will it
      *  be called.
      *  However, if the owner account is compromised or malicious, it could lead to
      *  potential exploitation of the lottery mechanism.
+     *  Also, since ethereum only stores the most recent 256 block hashes,
+     *  it is important to consider this limitation and start the reveal phase
+     *  before this occurs.
      */
 
     /**

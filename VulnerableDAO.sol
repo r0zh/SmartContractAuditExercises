@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.13;
 
+///@custom:fix added OpenZeppelin Ownable dependency
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 uint256 constant THRESHOLD = 10;
@@ -30,6 +31,7 @@ contract VulnerableDAO is Ownable {
 
     mapping(uint256 disputeId => Dispute) public disputes;
 
+    ///@custom:fix variables for commit-reveal lottery
     uint256 public revealBlock;
     mapping(address => bytes32) public commits;
     bytes32 public globalSeed;
@@ -38,6 +40,7 @@ contract VulnerableDAO is Ownable {
 
     event AwardNFT(address user);
 
+    ///@custom:fix removed isAuthorized modifier. The password to access key features is no longer needed
     /************************************** External  ****************************************************************/ 
 
     /**
@@ -58,6 +61,7 @@ contract VulnerableDAO is Ownable {
         * Consider this missing piece of code to be correct, do not ponder
         * about potential lack of validtaion or checks here
         */
+        
     }
 
 
@@ -67,11 +71,13 @@ contract VulnerableDAO is Ownable {
         @param vote The vote, true for FOR, false for AGAINST
      */
     function castVote(uint256 disputeId, bool vote) external {  
+
         /*
         * DAO vote casting logic goes here.
         * Consider this missing piece of code to be correct, do not ponder
         * about potential lack of validtaion or checks here
         */
+
     }
 
 
@@ -81,6 +87,7 @@ contract VulnerableDAO is Ownable {
         @param buyerReasoning The reasoning of the buyer in favor of the claim
         @param sellerReasoning The reasoning of the seller against the claim
      */
+    ///@custom:fix removed magicWord parameter. The password to access key features is no longer needed
     function newDispute( 
         uint256 itemId, 
         string calldata buyerReasoning, 
@@ -99,6 +106,7 @@ contract VulnerableDAO is Ownable {
         @param disputeId The ID of the target dispute
      */
     function endDispute(uint256 disputeId) external {  
+
         /*
         * DAO dispute logic goes here.
         * Consider this missing piece of code to be correct, do not ponder
@@ -173,7 +181,7 @@ contract VulnerableDAO is Ownable {
     }
 
     /**
-     *  @dev This functions is just for testing purpose
+     *  @dev This function is just for testing purpose 
      */
     function getCommitHashFromNonce(uint256 nonce) external view returns (bytes32){
         return keccak256(abi.encodePacked(msg.sender, nonce));
@@ -188,4 +196,5 @@ contract VulnerableDAO is Ownable {
     function query_dispute(uint256 disputeId) public view returns (Dispute memory) {
         return disputes[disputeId];
     }
+
 }
